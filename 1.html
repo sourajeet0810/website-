@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Heart's Proposal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@300;400;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+            
+        /* Romantic Color Palette */
+        :root {
+            --romantic-pink: #ff6ec7;
+            --soft-pink: #ffb6c1;
+            --rose-gold: #e0bfb8;
+            --deep-red: #c93756;
+            --soft-white: #fff9fb;
+            --dark-bg: #1a0a14;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--soft-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 110, 199, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.15) 0%, transparent 20%);
+        }
+        
+        /* Main Container */
+        .main-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        /* Page Transition */
+        .page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            padding: 2rem;
+            padding-top: 80px;
+            padding-bottom: 120px;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            z-index: 10;
+        }
+        
+        .page.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        /* Intro Page */
+        .intro-page {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(157,0,255,0.2) 100%);
+            justify-content: center;
+        }
+        
+        .intro-page .intro-text {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 3rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.5s forwards 0.5s;
+            color: var(--soft-pink);
+            text-shadow: 0 0 10px var(--romantic-pink);
+        }
+        
+        /* Memory Page */
+        .memory-page {
+            background: radial-gradient(circle, var(--dark-bg) 0%, rgba(157,0,255,0.2) 100%);
+        }
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        .memory-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            aspect-ratio: 1;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
+            border: 2px solid var(--rose-gold);
+        }
+        
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .memory-item:hover {
+            box-shadow: 0 0 25px var(--romantic-pink);
+            transform: translateY(-5px);
+        }
+        
+        .memory-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .memory-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,110,199,0.3), rgba(224,191,184,0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .memory-item:hover::after {
+            opacity: 1;
+        }
+        
+        /* Countdown Page */
+        .countdown-page {
+            background: radial-gradient(circle, var(--dark-bg) 0%, rgba(255,110,199,0.1) 100%);
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .countdown-box {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(26, 10, 20, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
+            border: 1px solid var(--rose-gold);
+        }
+        
+        .countdown-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--romantic-pink), var(--rose-gold), var(--deep-red));
+            background-size: 400%;
+            border-radius: 15px;
+            opacity: 0.7;
+            animation: borderGlow 8s linear infinite;
+        }
+        
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--soft-pink);
+            text-shadow: 0 0 10px var(--romantic-pink);
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            color: var(--soft-white);
+        }
+        
+        /* Main Proposal Page */
+        .proposal-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            padding-top: 80px;
+            padding-bottom: 200px;
+            background: url('https://i.imgur.com/JRQV5aO.png') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .proposal-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 10, 20, 0.7);
+            z-index: -1;
+        }
+        
+        .proposal-page h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin: 2rem 0;
+            text-shadow: 0 0 10px var(--romantic-pink), 
+                         0 0 20px var(--romantic-pink), 
+                         0 0 30px var(--deep-red);
+            color: var(--soft-white);
+            animation: pulse 2s infinite alternate;
+            line-height: 1.2;
+        }
+        
+        @keyframes pulse {
+            from {
+                text-shadow: 0 0 10px var(--romantic-pink), 
+                             0 0 20px var(--romantic-pink), 
+                             0 0 30px var(--deep-red);
+            }
+            to {
+                text-shadow: 0 0 15px var(--romantic-pink), 
+                             0 0 25px var(--rose-gold), 
+                             0 0 35px var(--deep-red);
+            }
+        }
+        
+        .proposal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .proposal-text {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            line-height: 1.6;
+            margin: 2rem 0;
+            width: 100%;
+            position: relative;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(26, 10, 20, 0.7);
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.3);
+            border: 1px solid var(--rose-gold);
+        }
+        
+        .proposal-text::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--romantic-pink), var(--rose-gold), var(--deep-red), var(--soft-pink));
+            background-size: 400%;
+            border-radius: 15px;
+            opacity: 0.7;
+            animation: borderGlow 8s linear infinite;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+        
+        .ring-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            perspective: 1000px;
+        }
+        
+        .ring {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        .ring img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px var(--romantic-pink)) 
+                    drop-shadow(0 0 25px var(--rose-gold));
+        }
+        
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 50;
+            padding: 1rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 182, 193, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background-color: var(--romantic-pink);
+            transform: scale(1.3);
+        }
+        
+        /* Buttons Container */
+        .buttons-container {
+            position: fixed;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 50;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(26,10,20,0.9) 0%, rgba(26,10,20,0) 100%);
+        }
+        
+        /* Success Page */
+        .success-page {
+            background: radial-gradient(circle, var(--dark-bg) 0%, rgba(201,55,86,0.2) 100%);
+        }
+        
+        .success-page h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--soft-pink);
+            text-shadow: 0 0 15px var(--romantic-pink);
+            margin-bottom: 2rem;
+        }
+        
+        .success-message {
+            font-size: clamp(1rem, 4vw, 1.8rem);
+            max-width: 800px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            color: var(--soft-white);
+        }
+        
+        .wedding-date {
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            color: var(--rose-gold);
+            margin: 2rem 0;
+            text-shadow: 0 0 10px var(--romantic-pink);
+        }
+        
+        /* Shared Elements */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin: 0.3rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--soft-pink);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--romantic-pink);
+        }
+        
+        .btn-secondary {
+            background-color: var(--romantic-pink);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--romantic-pink);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--soft-white);
+            border: 2px solid var(--rose-gold);
+            box-shadow: 0 0 15px var(--rose-gold);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px;
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Sticky Navigation Banner */
+        .sticky-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, var(--dark-bg), rgba(201, 55, 86, 0.5), var(--dark-bg));
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--rose-gold);
+        }
+        
+        .banner-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.2rem;
+            color: var(--soft-white);
+            text-shadow: 0 0 5px var(--romantic-pink);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(90deg, transparent, rgba(201, 55, 86, 0.3), transparent);
+            padding: 1.5rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--romantic-pink), 
+                var(--rose-gold), 
+                var(--deep-red), 
+                transparent);
+            box-shadow: 0 0 10px var(--romantic-pink), 
+                        0 0 20px var(--rose-gold);
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px var(--rose-gold);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .social-icon {
+            color: var(--soft-white);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--rose-gold);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            text-shadow: 0 0 10px var(--romantic-pink), 
+                         0 0 20px var(--rose-gold);
+        }
+        
+        /* Romantic Elements */
+        .romantic-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        /* Hearts */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--romantic-pink);
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: float 6s linear infinite;
+        }
+        
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--romantic-pink);
+            border-radius: 50%;
+        }
+        
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart::after {
+            top: 0;
+            left: -10px;
+        }
+        
+        /* Flowers */
+        .flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s linear infinite;
+        }
+        
+        .flower::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--romantic-pink) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+        
+        /* Floating Elements Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--romantic-pink);
+            opacity: 0;
+        }
+        
+        /* Typing effect */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid var(--romantic-pink);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--romantic-pink); }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            z-index: 200;
+        }
+        
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--soft-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+        }
+        
+        .music-btn:hover {
+            background: var(--romantic-pink);
+            transform: scale(1.1);
+        }
+        
+        /* No Button Animations */
+        @keyframes noButtonShake {
+            0%, 100% { transform: translateX(0) translateY(-5px); }
+            25% { transform: translateX(-10px) translateY(-5px); }
+            50% { transform: translateX(10px) translateY(-5px); }
+            75% { transform: translateX(-10px) translateY(-5px); }
+        }
+        
+        @keyframes noButtonJump {
+            0% { transform: translateY(-5px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.1); }
+            100% { transform: translateY(-5px) scale(1); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .page {
+                padding-top: 70px;
+                padding-bottom: 120px;
+            }
+            
+            .proposal-page {
+                justify-content: flex-start;
+                padding-top: 70px;
+            }
+            
+            .proposal-content {
+                margin-top: 1rem;
+            }
+            
+            .buttons-container {
+                bottom: 80px;
+                gap: 0.5rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                width: 80%;
+                max-width: 200px;
+            }
+            
+            .nav-dots {
+                bottom: 150px;
+            }
+            
+            /* Mobile-specific No button */
+            #noBtn {
+                position: relative !important;
+                left: auto !important;
+                top: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                margin: 0.3rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .intro-page .intro-text {
+                font-size: 1.5rem;
+            }
+            
+            .proposal-page h1, .success-page h1 {
+                font-size: 1.8rem;
+            }
+            
+            .proposal-text, .success-message {
+                font-size: 1rem;
+                padding: 1.2rem;
+            }
+            
+            .countdown-box {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+            
+            .ring-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sticky Navigation Banner -->
+        <div class="sticky-banner">
+            <div class="banner-title">My Heart's Proposal</div>
+        </div>
+        
+        <!-- Romantic Background Elements -->
+        <div class="romantic-elements" id="romanticElements"></div>
+        
+        <!-- Confetti -->
+        <div class="confetti" id="confetti"></div>
+        
+        <!-- Music Player -->
+        <div class="music-player">
+            <button class="music-btn" id="musicBtn">
+                <i class="fas fa-music"></i>
+            </button>
+            <audio id="bgMusic" loop>
+                <source src="Apna Bana Le Piya (PenduJatt.Com.Se).mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        
+        <!-- Pages -->
+        <div class="page intro-page active" id="introPage">
+            <div class="intro-text">
+                <span class="typing-text">I have something very special to ask you...</span>
+            </div>
+            <button class="btn btn-primary" id="startBtn" style="margin-top: 2rem;">
+                Let Me See <i class="fas fa-heart"></i>
+            </button>
+        </div>
+        
+        <div class="page memory-page" id="memoryPage">
+            <h2>Our Beautiful Memories</h2>
+            <p>Every moment with you has been magical...</p>
+            
+            <div class="memory-grid">
+                <div class="memory-item">
+                    <img src="images (1).png" alt="Memory 1">
+                </div>
+                <div class="memory-item">
+                    <img src="images (2).jfif" alt="Memory 2">
+                </div>
+                <div class="memory-item">
+                    <img src="images (1).jfif" alt="Memory 3">
+                </div>
+                <div class="memory-item">
+                    <img src="images.jfif" alt="Memory 4">
+                </div>
+                <div class="memory-item">
+                    <img src="1.jfif" alt="Memory 5">
+                </div>
+                <div class="memory-item">
+                    <img src="images (3).jfif" alt="Memory 6">
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="continueBtn" style="margin-top: 2rem;">
+                Continue Our Journey <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <div class="page countdown-page" id="countdownPage">
+            <h2>The Moment You've Been Waiting For</h2>
+            <p>Get ready for something special...</p>
+            
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <div class="countdown-number" id="countdown-days">3</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="countdown-hours">2</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="countdown-minutes">1</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="countdown-seconds">0</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="skipBtn" style="margin-top: 2rem;">
+                Skip to the Surprise <i class="fas fa-gem"></i>
+            </button>
+        </div>
+        
+        <div class="page proposal-page" id="proposalPage">
+            <div class="proposal-content">
+                <h1>can I hold your hand it's looks heavy?</h1>
+                
+                <div class="ring-container">
+                    <div class="ring">
+                        <img src="7281739.png" alt="Diamond Ring">
+                    </div>
+                </div>
+                
+                <div class="proposal-text">
+                    <p>From the moment we met, I knew my life would never be the same. Every day with you is an adventure, and every moment without you feels incomplete. I can't imagine my future without you by my side.</p>
+                    <p>Will you make me the happiest person in the world and be my partner for life?</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page success-page" id="successPage">
+            <h1>Wooo! I can't believe it!</h1>
+            
+            <div class="proposal-text">
+                <p class="success-message">You've just made me the happiest person in the world! I promise to love you, cherish you, and make you smile every day for the rest of our lives.</p>
+            </div>
+            
+            <div class="ring-container">
+                <div class="ring">
+                    <img src="7281739.png" alt="Diamond Ring">
+                </div>
+            </div>
+            
+            
+            
+            <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
+                Relive This Moment <i class="fas fa-redo"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation Dots -->
+        <div class="nav-dots" id="navDots"></div>
+        
+        <!-- Proposal Buttons -->
+        <div class="buttons-container" id="buttonsContainer">
+            <button class="btn btn-primary" id="yesBtn">YES! <i class="fas fa-heart"></i></button>
+            <button class="btn btn-secondary" id="noBtn">No <i class="fas fa-heart-broken"></i></button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">Made with <i class="fas fa-heart" style="color: var(--romantic-pink);"></i> for [name]</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const pages = document.querySelectorAll('.page');
+            const introPage = document.getElementById('introPage');
+            const memoryPage = document.getElementById('memoryPage');
+            const countdownPage = document.getElementById('countdownPage');
+            const proposalPage = document.getElementById('proposalPage');
+            const successPage = document.getElementById('successPage');
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            const romanticElements = document.getElementById('romanticElements');
+            const navDots = document.getElementById('navDots');
+            
+            // Navigation buttons
+            const startBtn = document.getElementById('startBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            const restartBtn = document.getElementById('restartBtn');
+            
+            // Music elements
+            const musicBtn = document.getElementById('musicBtn');
+            const bgMusic = document.getElementById('bgMusic');
+            
+            // Other elements
+            const confetti = document.getElementById('confetti');
+            const noBtn = document.getElementById('noBtn');
+            
+            // Page management
+            let currentPageIndex = 0;
+            const pageOrder = ['introPage', 'memoryPage', 'countdownPage', 'proposalPage', 'successPage'];
+            
+            // Music control
+            let isMusicPlaying = false;
+            
+            musicBtn.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    bgMusic.pause();
+                    musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                } else {
+                    bgMusic.play();
+                    musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }
+                isMusicPlaying = !isMusicPlaying;
+            });
+            
+            // Create navigation dots
+            function createNavDots() {
+                navDots.innerHTML = '';
+                pageOrder.forEach((page, index) => {
+                    if (page !== 'proposalPage' && page !== 'successPage') {
+                        const dot = document.createElement('div');
+                        dot.classList.add('dot');
+                        if (index === currentPageIndex) {
+                            dot.classList.add('active');
+                        }
+                        dot.addEventListener('click', () => {
+                            goToPage(page);
+                        });
+                        navDots.appendChild(dot);
+                    }
+                });
+            }
+            
+            // Create romantic elements (hearts and flowers)
+            function createRomanticElements() {
+                romanticElements.innerHTML = '';
+                
+                // Create hearts
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.opacity = '0.8';
+                    
+                    const colors = ['#ff6ec7', '#e0bfb8', '#ffb6c1', '#c93756'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.background = color;
+                    
+                    const before = document.createElement('div');
+                    before.style.position = 'absolute';
+                    before.style.width = '20px';
+                    before.style.height = '20px';
+                    before.style.top = '-10px';
+                    before.style.left = '0';
+                    before.style.background = color;
+                    before.style.borderRadius = '50%';
+                    
+                    const after = document.createElement('div');
+                    after.style.position = 'absolute';
+                    after.style.width = '20px';
+                    after.style.height = '20px';
+                    after.style.top = '0';
+                    after.style.left = '-10px';
+                    after.style.background = color;
+                    after.style.borderRadius = '50%';
+                    
+                    heart.appendChild(before);
+                    heart.appendChild(after);
+                    romanticElements.appendChild(heart);
+                }
+                
+                // Create flowers
+                for (let i = 0; i < 10; i++) {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    flower.style.animationDuration = 6 + Math.random() * 6 + 's';
+                    flower.style.animationDelay = Math.random() * 5 + 's';
+                    flower.style.opacity = '0.8';
+                    
+                    const colors = ['#ffb6c1', '#e0bfb8', '#ff6ec7', '#c93756'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    flower.style.background = color;
+                    
+                    const before = document.createElement('div');
+                    before.style.position = 'absolute';
+                    before.style.width = '100%';
+                    before.style.height = '100%';
+                    before.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+                    before.style.borderRadius = '50%';
+                    before.style.transform = 'rotate(45deg)';
+                    
+                    flower.appendChild(before);
+                    romanticElements.appendChild(flower);
+                }
+            }
+            
+            // Navigation functions
+            function goToPage(pageId) {
+                // Hide all pages
+                pages.forEach(p => {
+                    p.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update current page index
+                currentPageIndex = pageOrder.indexOf(pageId);
+                
+                // Update navigation dots
+                createNavDots();
+                
+                // Update navigation buttons visibility
+                updateNavigation();
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+            
+            function updateNavigation() {
+                // Hide buttons container by default
+                buttonsContainer.style.display = 'none';
+                
+                // Show only for proposal page
+                if (pageOrder[currentPageIndex] === 'proposalPage') {
+                    buttonsContainer.style.display = 'flex';
+                }
+            }
+            
+            // Navigation button event listeners
+            startBtn.addEventListener('click', function() {
+                this.style.animation = 'heartbeat 0.5s ease';
+                setTimeout(() => {
+                    goToPage('memoryPage');
+                    createRomanticElements();
+                }, 500);
+            });
+            
+            continueBtn.addEventListener('click', function() {
+                this.style.animation = 'heartbeat 0.5s ease';
+                setTimeout(() => {
+                    goToPage('countdownPage');
+                    startCountdown();
+                }, 500);
+            });
+            
+            skipBtn.addEventListener('click', function() {
+                this.style.animation = 'heartbeat 0.5s ease';
+                setTimeout(() => {
+                    goToPage('proposalPage');
+                    stopCountdown();
+                    createRomanticElements();
+                }, 500);
+            });
+            
+            restartBtn.addEventListener('click', function() {
+                this.style.animation = 'heartbeat 0.5s ease';
+                setTimeout(() => {
+                    goToPage('introPage');
+                }, 500);
+            });
+            
+            // Enhanced No Button Behavior
+            let noButtonClickAttempts = 0;
+            const maxClickAttempts = 5;
+            
+            function moveNoButton() {
+                const btn = noBtn;
+                const btnWidth = btn.offsetWidth;
+                const btnHeight = btn.offsetHeight;
+                
+                // Calculate safe area (avoiding edges and footer)
+                const minX = 20;
+                const maxX = window.innerWidth - btnWidth - 20;
+                const minY = 20;
+                const maxY = window.innerHeight - btnHeight - 180;
+                
+                // Random position within safe area
+                const randomX = Math.max(minX, Math.min(maxX, Math.random() * maxX));
+                const randomY = Math.max(minY, Math.min(maxY, Math.random() * maxY));
+                
+                // Apply new position
+                btn.style.position = 'fixed';
+                btn.style.left = randomX + 'px';
+                btn.style.top = randomY + 'px';
+                
+                // Add jump animation
+                btn.style.animation = 'noButtonJump 0.3s ease';
+                setTimeout(() => {
+                    btn.style.animation = '';
+                }, 300);
+            }
+            
+            // Move button on hover (desktop only)
+            noBtn.addEventListener('mouseenter', function() {
+                if (window.innerWidth > 768) {
+                    moveNoButton();
+                }
+            });
+            
+            // Move button on touch (mobile)
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                if (window.innerWidth <= 768) {
+                    this.style.animation = 'noButtonShake 0.5s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 500);
+                } else {
+                    moveNoButton();
+                }
+            });
+            
+            // Prevent clicking the No button
+            noBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                noButtonClickAttempts++;
+                
+                if (window.innerWidth > 768) {
+                    moveNoButton();
+                } else {
+                    this.style.animation = 'noButtonShake 0.5s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 500);
+                }
+                
+                if (noButtonClickAttempts >= maxClickAttempts) {
+                    this.style.opacity = '0.5';
+                    this.style.cursor = 'not-allowed';
+                    this.style.animation = 'none';
+                    this.onmouseenter = null;
+                    this.onclick = null;
+                    this.ontouchstart = null;
+                }
+            });
+            
+            // Make button draggable (desktop only)
+            if (window.innerWidth > 768) {
+                noBtn.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    let posX = e.clientX - this.getBoundingClientRect().left;
+                    let posY = e.clientY - this.getBoundingClientRect().top;
+                    
+                    function moveButton(e) {
+                        const x = e.clientX - posX;
+                        const y = e.clientY - posY;
+                        
+                        // Constrain to visible area
+                        const maxX = window.innerWidth - this.offsetWidth;
+                        const maxY = window.innerHeight - this.offsetHeight - 150;
+                        
+                        this.style.left = Math.max(0, Math.min(maxX, x)) + 'px';
+                        this.style.top = Math.max(0, Math.min(maxY, y)) + 'px';
+                    }
+                    
+                    function stopDrag() {
+                        document.removeEventListener('mousemove', moveButton);
+                        document.removeEventListener('mouseup', stopDrag);
+                    }
+                    
+                    this.style.position = 'fixed';
+                    document.addEventListener('mousemove', moveButton.bind(this));
+                    document.addEventListener('mouseup', stopDrag);
+                });
+            }
+            
+            // Handle the "Yes" button
+            document.getElementById('yesBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                goToPage('successPage');
+                createConfetti();
+                createRomanticElements();
+                setWeddingDate();
+                
+                // Play music if not already playing
+                if (!isMusicPlaying) {
+                    bgMusic.play();
+                    musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    isMusicPlaying = true;
+                }
+            });
+            
+            // Countdown timer
+            let countdownInterval;
+            
+            function startCountdown() {
+                let countdownDate = new Date();
+                countdownDate.setSeconds(countdownDate.getSeconds() + 10);
+                
+                countdownInterval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = countdownDate - now;
+                    
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('countdown-days').textContent = days;
+                    document.getElementById('countdown-hours').textContent = hours;
+                    document.getElementById('countdown-minutes').textContent = minutes;
+                    document.getElementById('countdown-seconds').textContent = seconds;
+                    
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        goToPage('proposalPage');
+                        createRomanticElements();
+                    }
+                }, 1000);
+            }
+            
+            function stopCountdown() {
+                clearInterval(countdownInterval);
+            }
+            
+            // Confetti effect
+            function createConfetti() {
+                confetti.style.display = 'block';
+                const colors = ['#ff6ec7', '#e0bfb8', '#ffb6c1', '#c93756', '#ffffff'];
+                
+                for (let i = 0; i < 150; i++) {
+                    setTimeout(() => {
+                        const piece = document.createElement('div');
+                        piece.classList.add('confetti-piece');
+                        piece.style.left = Math.random() * 100 + 'vw';
+                        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                        
+                        if (Math.random() > 0.5) {
+                            piece.style.borderRadius = '50%';
+                        } else {
+                            piece.style.width = '8px';
+                            piece.style.height = '15px';
+                        }
+                        
+                        confetti.appendChild(piece);
+                        
+                        piece.style.animation = `confetti-fall ${3 + Math.random() * 4}s linear forwards`;
+                        piece.style.animationDelay = Math.random() * 2 + 's';
+                        
+                        const keyframes = `
+                            @keyframes confetti-fall {
+                                0% {
+                                    transform: translateY(-100vh) rotate(0deg);
+                                    opacity: 1;
+                                }
+                                100% {
+                                    transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                                    opacity: 0;
+                                }
+                            }
+                        `;
+                        
+                        const style = document.createElement('style');
+                        style.innerHTML = keyframes;
+                        document.head.appendChild(style);
+                    }, i * 20);
+                }
+            }
+            
+            // Set wedding date
+            function setWeddingDate() {
+                const weddingDate = new Date();
+                weddingDate.setMonth(weddingDate.getMonth() + 6);
+                
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('weddingDate').textContent = weddingDate.toLocaleDateString('en-US', options);
+            }
+            
+            // Initialize
+            createRomanticElements();
+            createNavDots();
+            updateNavigation();
+            
+            // Add animations
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes heartbeat {
+                    0% { transform: scale(1); }
+                    25% { transform: scale(1.1); }
+                    50% { transform: scale(1); }
+                    75% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
