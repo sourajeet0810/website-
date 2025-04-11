@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project One | My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-bg">
+        <video autoplay muted loop>
+            <source src="1.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="../index.html" class="logo">Sourajeet Work</a>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../work.html">Work</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Details -->
+    <main class="project-details">
+        <div class="container">
+            <div class="project-header">
+                <h1>One Love</h1>
+                <div class="project-meta">
+                    <span class="project-date">Completed: January 2025</span>
+                    <span class="project-category">Web Development</span>
+                </div>
+            </div>
+
+            <div class="project-video">
+                <div class="video-container">
+                    <video controls poster="../assets/images/project1-preview.jpg">
+                        <source src="../assets/videos/project1-demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="project-actions">
+                    <a href="1.html" class="btn neon-btn" target="_blank">Visit Live Site</a>
+                    <a href="1.txt" class="btn secondary-btn" id="viewSourceBtn">View Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="project-description">
+                    <h2>Project Overview</h2>
+                    <p>This is a projects that a web developer can create for his/her special one you can also add your sweet memories in the second page and his/her name in the footer the scorce code is available beginer can also create the web page for his/her special one/loved one  using the scorce code </p>
+                    
+                    <h3>Technologies Used</h3>
+                    <ul class="tech-list">
+                        <li>HTML5 & CSS3</li>
+                        <li>JavaScript (ES6+)</li>
+                    </ul>
+                    
+                    <h3>Key Features</h3>
+                    <ul class="features-list">
+                        <li>Responsive design that works on all devices</li>
+                          <li>creative no button specification so that he/she can only say yes</li>
+                    </ul>
+                    
+                 
+                </div>
+
+                <div class="project-sidebar">
+                    <div class="project-details-card">
+                        <h3>Project Details</h3>
+                        <ul>
+                            <li><strong>Client:</strong> My loved one</li>
+                            <li><strong>Duration:</strong> 1 Week</li>
+                            <li><strong>Team Size:</strong> 1 members</li>
+                            <li><strong>My Role:</strong> Frontend Developer</li>
+                        </ul>
+                    </div>
+
+                    <div class="source-code-card">
+                        <h3>Source Code</h3>
+                        <div class="source-code-upload">
+                            <p>Available for review upon request</p>
+                            <a href="1.txt" class="btn secondary-btn" id="requestAccessBtn">Request Access</a>
+                            <div class="upload-area" id="uploadArea" style="display: none;">
+                                <h4>Upload Your Code</h4>
+                                <form id="sourceUploadForm">
+                                    <input type="file" id="sourceCode" accept=".zip,.rar,.tar,.gz" required>
+                                    <button type="submit" class="btn">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-gallery">
+                <h2>Screenshots</h2>
+                <div class="gallery-grid">
+                    <img src="1.png" alt="Project screenshot 1">
+                    <img src="2.png" alt="Project screenshot 2">
+                    <img src="3.png" alt="Project screenshot 3">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sourajeet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Source Code Modal -->
+    <div class="modal" id="sourceModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Source Code Access</h2>
+            <div class="modal-body">
+                <p>Please contact me to request access to the source code of this project.</p>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Sourajeet" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="codingwallehbhaiya@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/project.js"></script>
+</body>
+</html>
